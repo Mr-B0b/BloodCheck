@@ -1,0 +1,13 @@
+Description: Computers with juicy keywords in description
+Hash: 257B7C33713EA3D0A6DBFBEC950C32ED3BE9BFC0ACECAE0C4D1AEC388F2FB35F
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (c:Computer)
+WHERE c.description =~ "(?i).*\\b(pass|secret|admin|sensitive|mdp)\\b.*"
+AND c.enabled = true
+RETURN c.name AS `Name`, c.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(c.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, c.enabled AS `Enabled` ORDER BY c.pwdlastset DESC
+'

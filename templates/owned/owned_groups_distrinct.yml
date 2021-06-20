@@ -1,0 +1,10 @@
+Description: Distrinct groups of owned users
+Hash: 0EB9388CCE6746882DAB446DB110F30BEB5DC05615BC0A1BEE8FA6F7B8BACC38
+Headers:
+  - Name
+Query: '
+MATCH (u:User)
+WHERE u.owned=TRUE
+WITH u MATCH (u)-[r:MemberOf*1..]->(g:Group)
+RETURN DISTINCT(g.name) AS `Name`
+'

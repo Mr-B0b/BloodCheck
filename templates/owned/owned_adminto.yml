@@ -1,0 +1,13 @@
+Description: Owned admin access
+Hash: 0B0A3D124CBF9D32B8EA46A2C9B6A7F387201695F9E9CA09508491523B889E17
+Headers:
+  - Name
+  - Host
+  - pwdlastset user
+  - Enabled (user)
+  - Enabled (host)
+Query: '
+MATCH p=(u:User)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+WHERE u.owned = true
+RETURN u.name AS `Name`, c.name AS `Host`, u.pwdlastset AS `pwdlastset user`, u.enabled AS `Enabled (user)`, c.enabled AS `Enabled (host)`
+'

@@ -1,0 +1,10 @@
+Description: ALL GPO
+Hash: B7643DFB87189B040B4230089C89B2C46F5D5741CDA471A4A42E2047AA3A59E1
+Headers:
+  - Name
+  - GUID
+  - GPC Path
+Query: '
+MATCH (g:GPO)
+RETURN g.name AS `Name`, g.guid AS `GUID`, g.gpcpath AS `GPC Path`
+'

@@ -1,0 +1,9 @@
+# coding: utf8
+
+# Define program variables
+neo4jInstanceType = "FIXME_local|remote|docker"
+neo4jURI = "bolt://localhost:7687"
+neo4jConfPath = "FIXME_Neo4j_Installation_Path\\conf"
+neo4jDataPath = "FIXME_Neo4j_Installation_Path\\data"
+neo4jUser = "neo4j"
+neo4jPass = "FIXME_neo4j_pass"

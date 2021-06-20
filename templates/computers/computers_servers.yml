@@ -1,0 +1,13 @@
+Description: All Servers
+Hash: 8DB92C46C1AC5FBD7B4EAF3FEAB021864753A8EF93976912182B132F55EA3DAF
+Headers:
+  - System
+  - Operating System
+  - Description
+  - Unconstrained Delegation
+  - Enabled
+Query: '
+MATCH (c:Computer)
+WHERE c.operatingsystem =~ ".*Server.*"
+RETURN c.name AS `System`, c.operatingsystem AS `Operating System`, c.description AS `Description`, c.unconstraineddelegation AS `Unconstrained Delegation`, c.enabled AS `Enabled`
+'

@@ -1,0 +1,10 @@
+Description: OUs members count
+Hash: 614A2864F08091B8A51DCF2C8DAFF7CA819D60C09E4C33A59D078AA297FF0A57
+Headers:
+  - OU Name
+  - Object ID
+  - Computers count
+Query: '
+MATCH (o:OU)-[r:Contains]->(c:Computer)
+RETURN o.name AS `OU Name`, o.objectid AS `Object ID`, COUNT(c) AS `Computers count` ORDER BY COUNT(c) DESC
+'

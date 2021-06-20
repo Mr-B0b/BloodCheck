@@ -1,0 +1,13 @@
+Description: Users descriptions with date
+Hash: DFC1CAA484FD94B9E4781C042F1F733851CA7DE73D8ADB405A35DD073A2BA49B
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.description is not null
+AND u.enabled = true
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled` ORDER BY u.pwdlastset DESC
+'

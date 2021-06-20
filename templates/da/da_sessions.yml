@@ -1,0 +1,15 @@
+Description: DA sessions
+Hash: 70D13AFCE81A64C42D700B9FA0F68C9091AFE3B6321BE9EE1BBEC4F8D1FB21E0
+Headers:
+  - Computer Name
+  - Admin
+  - Last Logon
+  - Operating System
+  - Unconstrained Delegation
+  - Description
+Query: '
+MATCH (u:User)-[r1:MemberOf*1..]->(g:Group) 
+WHERE g.objectid ENDS WITH "-512" 
+MATCH p=(c:Computer)-[r2:HasSession]->(u) 
+RETURN c.name AS `Computer Name`, u.name AS `Admin`, replace(replace(toString(datetime({ epochSeconds:toInt(u.lastlogon)})),"T"," "),"Z","") AS `Last Logon`, c.operatingsystem AS `Operating System`, c.unconstraineddelegation AS `Unconstrained Delegation`, c.description AS `Description`
+'

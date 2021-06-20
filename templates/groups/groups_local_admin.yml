@@ -1,0 +1,9 @@
+Description: Groups with local admin rights
+Hash: 3AEC86A6D87E676A3D5334BBAF6C31A08AFD727E365AFE9175DB025022F477DC
+Headers:
+  - Group Name
+  - Computer Name
+Query: '
+MATCH p=(g:Group)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+RETURN g.name AS `Group Name`, c.name AS `Computer Name` ORDER BY g.name
+'

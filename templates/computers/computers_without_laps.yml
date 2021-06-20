@@ -1,0 +1,15 @@
+Description: Computers without LAPS
+Hash: 4998971F9CC5E219ED1706AC29A0121333BA49F68D60C60CEC9B0223D864B120
+Headers:
+  - System
+  - Operating System
+  - Description
+  - Unconstrained Delegation
+  - LAPS
+  - Enabled
+Query: '
+MATCH (c:Computer)
+WHERE c.haslaps = false
+AND c.enabled = true
+RETURN c.name AS `System`, c.operatingsystem AS `Operating System`, c.description AS `Description`, c.unconstraineddelegation AS `Unconstrained Delegation`, c.haslaps AS `LAPS`, c.enabled AS `Enabled`
+'

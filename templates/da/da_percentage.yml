@@ -1,0 +1,10 @@
+Description: Percentage of Domain Admins
+Hash: 27B51B8CA2A9B83E29806FF6734D6508FA944FD161FFEC1C634350A49EAA21D5
+Headers:
+  - DA Percentage
+Query: '
+MATCH (u:User)
+MATCH (g:Group)
+WHERE g.objectid ENDS WITH "-512" WITH COUNT(DISTINCT(u)) AS TotalUsers, g MATCH (g)<-[r:MemberOf*1..]-(da)
+RETURN 100.0 * COUNT(da) / TotalUsers AS `DA Percentage`
+'

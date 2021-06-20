@@ -1,0 +1,8 @@
+neo4j-driver;sys_platform == 'linux'
+neo4j;sys_platform == 'win32'
+pandas
+psutil
+pywin32;sys_platform == 'win32'
+PyYAML
+tabulate
+xlsxwriter

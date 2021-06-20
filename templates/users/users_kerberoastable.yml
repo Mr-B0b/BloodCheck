@@ -1,0 +1,12 @@
+Description: Kerberoastable users
+Hash: E626EE158DBE48D7BBE9D1083517198AEED1D38A01B1E97FA3EC1B793A629E10
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.hasspn = true
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`
+'

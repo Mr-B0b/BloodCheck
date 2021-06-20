@@ -1,0 +1,9 @@
+Description: Users with RDP rights
+Hash: 07340BB0A2A526B0543CAB47B08189D8FCD0A16778A6364CA1BD456C4F7A600F
+Headers:
+  - User Name
+  - Computer Name
+Query: '
+MATCH p=(u:User)-[r:CanRDP]->(c:Computer)
+RETURN u.name AS `User Name`, c.name AS `Computer Name` ORDER BY c.name
+'

@@ -1,0 +1,9 @@
+Description: Groups with RDP rights
+Hash: 696CD9B48E4872AB17C68DC426B73C6F1BFA524BC2C4281B032C7BF274A4820B
+Headers:
+  - Group Name
+  - Computer Name
+Query: '
+MATCH p=(g:Group)-[r:CanRDP]->(c:Computer)
+RETURN g.name AS `Group Name`, c.name AS `Computer Name` ORDER BY g.name
+'

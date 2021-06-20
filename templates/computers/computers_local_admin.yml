@@ -1,0 +1,9 @@
+Description: Computers with local admin rights
+Hash: 77BDF4693055A2D32682D8D3D75D7BA996B120CED51FE26DBAF605DB131F42F5
+Headers:
+  - Admin computer Name
+  - Computer Name
+Query: '
+MATCH p=(c1:Computer)-[r:MemberOf|:AdminTo*1..]->(c2:Computer)
+RETURN c1.name AS `Admin computer Name`, c2.name AS `Computer Name` ORDER BY c1.name
+'

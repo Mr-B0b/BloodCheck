@@ -1,0 +1,13 @@
+Description: Computers descriptions with date
+Hash: 53EE42B192CCCD3DD1B79EF4E17680E2561AAB1AC1A542BC4E1926D4214C9738
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (c:Computer)
+WHERE c.description is not null
+AND c.enabled = true
+RETURN c.name AS `Name`, c.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(c.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, c.enabled AS `Enabled` ORDER BY c.pwdlastset DESC
+'

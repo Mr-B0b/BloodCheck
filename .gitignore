@@ -1,0 +1,4 @@
+config.py
+*.pyc
+_output/*
+!_output/.keep

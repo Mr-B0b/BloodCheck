@@ -1,0 +1,12 @@
+Description: Users trusted to perform constrained delegation count
+Hash: F999BC2D77AC4218B23321DBE8B82BBD37EB75842DE7050A47374B87A2ADF8F7
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+  - Target computers count
+Query: '
+MATCH (u:User)-[r:AllowedToDelegate]->(c:Computer)
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`, COUNT(c) AS `Target computers count` ORDER BY COUNT(c) DESC
+'

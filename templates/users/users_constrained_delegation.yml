@@ -1,0 +1,10 @@
+Description: Users trusted to perform constrained delegation
+Hash: 282D43F7D78886A4878ECB1B1AF33F630D2EA84BC6D5D8EB085F6926DF272506
+Headers:
+  - Name
+  - Enabled
+  - Target computer
+Query: '
+MATCH (u:User)-[r:AllowedToDelegate]->(c:Computer)
+RETURN u.name AS `Name`, u.enabled AS `Enabled`, c.name AS `Target computer`
+'

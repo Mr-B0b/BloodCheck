@@ -1,0 +1,10 @@
+Description: Top 10 groups with most local admin rights
+Hash: F3BFE1E820CD4167F22E9D02849E6A7F7F8BD20FCCBB11A11BAFA8C26DB631AC
+Headers:
+  - Group Name
+  - Number of computers
+Query: '
+MATCH p=(g:Group)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+RETURN g.name AS `Group Name`, COUNT(DISTINCT(c.name)) AS `Number of computers` ORDER BY `Number of computers` DESC
+LIMIT 10
+'

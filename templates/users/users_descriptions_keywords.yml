@@ -1,0 +1,13 @@
+Description: Users with juicy keywords in description
+Hash: A5F60941DA3B55FA846AECFC511D5A88F090D516D6E213390A712CBED0E1A639
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.description =~ "(?i).*\\b(pass|secret|admin|sensitive|mdp)\\b.*"
+AND u.enabled = true
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled` ORDER BY u.pwdlastset DESC
+'

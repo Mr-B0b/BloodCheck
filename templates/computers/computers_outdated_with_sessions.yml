@@ -1,0 +1,15 @@
+Description: Outdated computers with sessions
+Hash: D5E98A604EC6F08033B2E8B114A1C71A351FF9DCFDAD4D6CE172302CCE33AA3F
+Headers:
+  - Computer Name
+  - User Name
+  - Last Logon
+  - Operating System
+  - Unconstrained Delegation
+  - Description
+  - Enabled
+Query: '
+MATCH (u:User),(c:Computer),p=(c)-[r:HasSession]->(u)
+WHERE c.operatingsystem =~ "(?i).*\\b(2000|2003|2008|xp|vista|7|me)\\b.*"
+RETURN c.name AS `Computer Name`, u.name AS `User Name`, replace(replace(toString(datetime({ epochSeconds:toInt(c.lastlogon)})),"T"," "),"Z","") AS `Last Logon`, c.operatingsystem AS `Operating System`, c.unconstraineddelegation AS `Unconstrained Delegation`, c.description AS `Description`, c.enabled AS `Enabled`
+'

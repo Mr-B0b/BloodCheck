@@ -1,0 +1,16 @@
+Description: Unconstrained delegation computers not DC
+Hash: 11C849116C7032B81D31B63D8C341BEC1C1B9463922BCC7609294028F6AEAD1E
+Headers:
+  - Name
+  - Operating System
+  - Description
+  - Enabled
+Query: '
+MATCH (c1:Computer)-[r1:MemberOf*1..]->(g1:Group)
+WHERE g1.objectid ENDS WITH "-516"
+WITH COLLECT(c1.name) AS domainControllers
+MATCH p=(c2:Computer)
+WHERE NOT (c2.name IN domainControllers)
+AND c2.unconstraineddelegation=true
+RETURN c2.name AS `Name`, c2.operatingsystem AS `Operating System`, c2.description AS `Description`, c2.enabled AS `Enabled`
+'

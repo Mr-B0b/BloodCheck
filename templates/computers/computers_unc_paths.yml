@@ -1,0 +1,13 @@
+Description: Computers with UNC paths in description
+Hash: 6CE56EC8A3D006DA03743B6D60AF85F2C579445B06821D87D4E4B6A33AAAAD90
+Headers:
+  - Name
+  - DisplayName
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:Computer)
+WHERE u.description CONTAINS "\\\\"
+RETURN u.name AS `Name`, u.displayname AS `DisplayName`, u.description AS `Description`, u.homedirectory AS `Homedirectory`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`
+'

@@ -1,0 +1,9 @@
+Description: Owned distinct admin access
+Hash: 5ECD453273F7EC0DB34D3AE6A0F1D3A29BA3286CC835291A3EFF17898706E9C2
+Headers:
+  - Name
+Query: '
+MATCH p=(u:User)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+WHERE u.owned = true
+RETURN DISTINCT(c.name) AS `Name`
+'

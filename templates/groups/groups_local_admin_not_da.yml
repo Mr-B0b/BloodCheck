@@ -1,0 +1,14 @@
+Description: Groups with local admin rights not DA
+Hash: AC7248765C4F126448995209B367220089C909FEEE17E0F8CBD09589832DFC00
+Headers:
+  - Group Name
+  - Computer Name
+Query: '
+MATCH (g:Group)
+WHERE NOT (g.objectid ENDS WITH "-512" OR g.objectid ENDS WITH "-519")
+OPTIONAL MATCH (g)-[:AdminTo]->(c1:Computer)
+OPTIONAL MATCH (g)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c2:Computer)
+WITH g, COLLECT(c1) + COLLECT(c2) AS tempVar
+UNWIND tempVar AS computers
+RETURN g.name AS `Group Name`, COLLECT(computers.name) AS `Computer Name`
+'

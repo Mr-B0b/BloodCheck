@@ -1,0 +1,13 @@
+Description: All Workstations
+Hash: B3EF36376CF896C6CE9F3A9B967538B30EC859150CE1CF34B242DD892C85CAAB
+Headers:
+  - System
+  - Operating System
+  - Description
+  - Unconstrained Delegation
+  - Enabled
+Query: '
+MATCH (c:Computer)
+WHERE NOT c.operatingsystem =~ ".*Server.*"
+RETURN c.name AS `System`, c.operatingsystem AS `Operating System`, c.description AS `Description`, c.unconstraineddelegation AS `Unconstrained Delegation`, c.enabled AS `Enabled`
+'

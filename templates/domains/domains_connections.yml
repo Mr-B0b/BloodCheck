@@ -1,0 +1,13 @@
+Description: Domains/forest connections
+Hash: 041FBC78F06B842556FE8984CA7990DBCEDD07A74B71E183AEDEAE9E3FD420E6
+Headers:
+  - Label A
+  - Domain A
+  - Relation
+  - Label B
+  - Domain B
+Query: '
+MATCH (d1)-[r]->(d2)
+WHERE NOT d1.domain = d2.domain
+RETURN LABELS(d1)[0] AS `Label A`, d1.name AS `Domain A`, TYPE(r) AS `Relation`, LABELS(d2)[0] AS `Label B`, d2.name AS `Domain B`
+'

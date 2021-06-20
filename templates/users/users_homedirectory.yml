@@ -1,0 +1,14 @@
+Description: Users Homedirectory
+Hash: 7C0A14ED4743719BFAA34D164725104E286FDE823B70982DED0DAE11908644F0
+Headers:
+  - Name
+  - DisplayName
+  - Description
+  - Homedirectory
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.homedirectory is not null
+RETURN u.name AS `Name`, u.displayname AS `DisplayName`, u.description AS `Description`, u.homedirectory AS `Homedirectory`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`
+'

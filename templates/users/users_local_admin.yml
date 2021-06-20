@@ -1,0 +1,9 @@
+Description: Users with local admin rights
+Hash: 03F7337A65F3CC0B2257EAF77B870CF8F9E141E76D6D1F337C962212C3DDB452
+Headers:
+  - User Name
+  - Computer Name
+Query: '
+MATCH p=(u:User)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+RETURN u.name AS `User Name`, c.name AS `Computer Name` ORDER BY u.name
+'

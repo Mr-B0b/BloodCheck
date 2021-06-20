@@ -1,0 +1,13 @@
+Description: Computers with local admin rights count
+Hash: 80F871A8532A06232A450B20B975971302346DCC04E75734E41F25657429FDEC
+Headers:
+  - Computer Name
+  - Admin access count
+Query: '
+MATCH (c1:Computer)
+OPTIONAL MATCH (c1)-[:AdminTo]->(c2:Computer)
+OPTIONAL MATCH (c1)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c3:Computer)
+WITH COLLECT(c2) + COLLECT(c3) AS tempVar,c1
+UNWIND tempVar AS computers
+RETURN c1.name AS `Computer Name`, COUNT(DISTINCT(computers)) AS `Admin access count` ORDER BY COUNT(DISTINCT(computers)) DESC
+'

@@ -1,0 +1,12 @@
+Description: ASREP roastable principals
+Hash: 074952B79EC102D513528D589E34EB91A0CEA191CE8F1E78F00CF548C9BC8423
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.dontreqpreauth = true
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`
+'

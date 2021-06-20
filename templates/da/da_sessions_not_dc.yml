@@ -1,0 +1,18 @@
+Description: DA sessions not DC
+Hash: DAF9FD81EDD9DB1F09E531FBDEFE60DC5B01771EFF0CADF04E958F0C4FF39C1C
+Headers:
+  - Computer Name
+  - Admin
+  - Last Logon
+  - Operating System
+  - Unconstrained Delegation
+  - Description
+Query: '
+MATCH (c1:Computer)-[r1:MemberOf*1..]->(g1:Group)
+WHERE g1.objectid ENDS WITH "-516"
+WITH COLLECT(c1.name) AS domainControllers
+MATCH p=(c2:Computer)-[r2:HasSession]->(u:User)-[r3:MemberOf*1..]->(g2:Group)
+WHERE NOT (c2.name IN domainControllers)
+AND g2.objectid ENDS WITH "-512"
+RETURN c2.name AS `Computer Name`, u.name AS `Admin`, replace(replace(toString(datetime({ epochSeconds:toInt(c2.lastlogon)})),"T"," "),"Z","") AS `Last Logon`, c2.operatingsystem AS `Operating System`, c2.unconstraineddelegation AS `Unconstrained Delegation`, c2.description AS `Description`
+'

@@ -1,0 +1,13 @@
+Description: Users with UNC paths in description
+Hash: 089AE7B7E125C82461DEE31EC6CD181744E3467909194A523380AA4AFBBA90EA
+Headers:
+  - Name
+  - DisplayName
+  - Description
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (u:User)
+WHERE u.description CONTAINS "\\\\"
+RETURN u.name AS `Name`, u.displayname AS `DisplayName`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, u.enabled AS `Enabled`
+'

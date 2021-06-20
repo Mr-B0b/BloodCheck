@@ -1,0 +1,14 @@
+Description: Owned principals
+Hash: CCB4ECFB9973AFB1E3ECAE753D0571426766331574D0EB76B048253130DC5B2C
+Headers:
+  - Name
+  - DisplayName
+  - Description
+  - Wave
+  - pwdlastset
+  - Enabled
+Query: '
+MATCH (n)
+WHERE n.owned = true
+RETURN n.name AS `Name`, n.displayname AS `DisplayName`, n.description AS `Description`, n.wave AS `Wave`, replace(replace(toString(datetime({ epochSeconds:toInt(n.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, n.enabled AS `Enabled`
+'

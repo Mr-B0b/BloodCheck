@@ -1,0 +1,14 @@
+Description: SPN Users
+Hash: 2FBD54EDDD5D44C5A67705F419542AEC4BA1C699B06C7E85EE60ABDD0965E5C9
+Headers:
+  - Name
+  - Description
+  - pwdlastset
+  - Last Logon
+  - Enabled
+  - SPN
+Query: '
+MATCH (u:User)
+WHERE u.hasspn = true
+RETURN u.name AS `Name`, u.description AS `Description`, replace(replace(toString(datetime({ epochSeconds:toInt(u.pwdlastset)})),"T"," "),"Z","") AS `pwdlastset`, replace(replace(toString(datetime({ epochSeconds:toInt(u.lastlogon)})),"T"," "),"Z","") AS `Last Logon`, u.enabled AS `Enabled`, u.serviceprincipalnames AS `SPN`
+'

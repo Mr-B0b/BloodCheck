@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  bloodcheck:
+    image: bloodcheck
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /opt/bloodcheck:/opt/bloodcheck
+    networks:
+      - dockernet
+  
+networks:
+  dockernet:
+    driver: bridge

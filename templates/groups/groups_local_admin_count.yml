@@ -1,0 +1,13 @@
+Description: Groups with local admin rights count
+Hash: 1443E3A933AF18CF810F3554DF5A5059D7A79EF7A166DC75118506D0112A7A49
+Headers:
+  - Group Name
+  - Admin Right Count
+Query: '
+MATCH (g:Group)
+OPTIONAL MATCH (g)-[:AdminTo]->(c1:Computer)
+OPTIONAL MATCH (g)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c2:Computer)
+WITH g, COLLECT(c1) + COLLECT(c2) AS tempVar
+UNWIND tempVar AS computers
+RETURN g.name AS `Group Name`, COUNT(DISTINCT(computers)) AS `Admin Right Count` ORDER BY `Admin Right Count` DESC
+'

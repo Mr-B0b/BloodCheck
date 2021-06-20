@@ -1,0 +1,12 @@
+Description: Users with local admin rights not marked as sensitive sessions
+Hash: 7628CC670835196AB4804901381AEB0C42C8CD92962AEEB9109F2EC358BC83CA
+Headers:
+  - User Name
+  - AdminTo
+  - Computer with session
+Query: '
+MATCH (u:User)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c1:Computer)
+WHERE u.sensitive = false
+WITH u,c1 MATCH (c2:Computer {unconstraineddelegation:true})-[:HasSession]->(u)
+RETURN u.name AS `User Name`, COLLECT(DISTINCT(c1.name)) AS `AdminTo`, COLLECT(DISTINCT(c2.name)) AS `Computer with session` ORDER BY `User Name` ASC
+'

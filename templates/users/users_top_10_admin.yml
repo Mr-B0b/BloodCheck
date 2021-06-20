@@ -1,0 +1,10 @@
+Description: Top 10 users with most local admin rights
+Hash: AB6DC3209C2864A14A1F403E698970C74AC6950941BE95606329FB81A33C0862
+Headers:
+  - User Name
+  - Number of computers
+Query: '
+MATCH (u:User)-[r:MemberOf|:AdminTo*1..]->(c:Computer)
+RETURN u.name AS `User Name`, COUNT(DISTINCT(c.name)) AS `Number of computers` ORDER BY `Number of computers` DESC
+LIMIT 10
+'
